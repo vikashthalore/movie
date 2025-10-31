@@ -20,7 +20,7 @@ const RelatedMovie = () => {
         const genre = currentMovie.genres?.[0];
         const actor = currentMovie.actors?.[0];
 
-        const relatedRes = await axios.get("http://localhost:5000/api/movies");
+        const relatedRes = await axios.get(`${BASE_URL}/api/movies`);
         const allMovies = relatedRes.data.movies || [];
 
         const filtered = allMovies.filter(
