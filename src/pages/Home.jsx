@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import MovieCard from "../components/MovieCard";
 import axios from "axios";
+import { BASE_URL } from "../config";
 
 const Home = () => {
   const [movies, setMovies] = useState([]);

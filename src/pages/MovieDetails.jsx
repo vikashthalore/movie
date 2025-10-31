@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import RelatedMovie from "../components/RelatedMovie";
 import ReactPlayer from "react-player";
+import { BASE_URL } from "../config";
 
 const MovieDetails = () => {
   const { id } = useParams();

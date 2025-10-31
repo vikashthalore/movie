@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import { BASE_URL } from "../config";
 
 const RelatedMovie = () => {
   const { id } = useParams();
@@ -9,6 +10,8 @@ const RelatedMovie = () => {
   useEffect(() => {
     const fetchRelated = async () => {
       try {
+        
+        // Correct way to fetch movie by ID
         const res = await axios.get(`${BASE_URL}/api/movies/${id}`);
         const currentMovie = res.data.movie;
         if (!currentMovie) return;
