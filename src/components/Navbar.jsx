@@ -72,7 +72,7 @@ const Navbar = ({
               className="p-1.5 rounded-md hover:bg-yellow-500 hover:text-black transition-all"
               title="Go Back"
             >
-              <ArrowLeft size={20} />
+              {/* <ArrowLeft size={20} /> */}
             </button>
           )}
 

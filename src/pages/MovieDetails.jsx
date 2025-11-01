@@ -262,36 +262,14 @@ const MovieDetails = () => {
 >
   ▶ Watch Now
 </button>
-
-
-
-                // <button
-                //   onClick={() => navigate(`/watch/${id}`)}
-                //   className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-green-400/50"
-                // >
-                //   ▶ Watch Now
-                // </button>
               )}
             </div>
           </div>
         )}
+        
       {/* 🎥 Fullscreen Watch Player */}
 {watchLink && <MovieWatch watchLink={watchLink} onClose={() => setWatchLink(null)} />}
-        {/* {watchLink && (
-  <div className="w-full h-screen flex justify-center items-center bg-black mt-10">
-    <iframe
-      src={watchLink}
-      width="100%"
-      height="100%"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-      allowFullScreen
-      scrolling="no"
-      className="w-full h-screen rounded-xl border border-yellow-500/50 shadow-lg"
-      title="MoviesFear Watch Player"
-    ></iframe>
-  </div>
-)} */}
+       
 
 
         {/* 🎬 Related Movies */}
