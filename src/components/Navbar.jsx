@@ -61,7 +61,7 @@ const Navbar = ({
 
   return (
     <nav className="bg-black text-white py-3 shadow-md sticky top-0 z-50 border-b border-yellow-500/30">
-      <div className="flex items-center justify-between px-4 sm:px-8">
+      <div className="flex items-center justify-between px-3 sm:px-6">
         {/* 🎬 Logo + Back Button */}
         <div className="flex items-center gap-3">
           
@@ -69,7 +69,7 @@ const Navbar = ({
           {location.pathname !== "/" && (
             <button
               onClick={handleBack}
-              className="p-1.5 rounded-md hover:bg-yellow-500 hover:text-black transition-all"
+              className="p-0.5 rounded-md hover:bg-yellow-500 hover:text-black transition-all"
               title="Go Back"
             >
               {/* <ArrowLeft size={20} /> */}
