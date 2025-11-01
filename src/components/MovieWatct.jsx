@@ -5,7 +5,7 @@ const MovieWatch = ({ watchLink, onClose }) => {
   const timeoutRef = useRef(null);
   const [showControls, setShowControls] = useState(true);
 
-  // Toggle Fullscreen
+  // ✅ Toggle Fullscreen
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       containerRef.current?.requestFullscreen?.();
@@ -14,34 +14,54 @@ const MovieWatch = ({ watchLink, onClose }) => {
     }
   };
 
-  // Show controls on any interaction
+  // ✅ Detect double-click for fullscreen toggle
+  const handleDoubleClick = (e) => {
+    e.preventDefault();
+    toggleFullScreen();
+  };
+
+  // ✅ Show/Hide control buttons when user interacts
   const handleUserActivity = () => {
     setShowControls(true);
-
-    // Clear previous timeout
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-    // Hide after 4 seconds
     timeoutRef.current = setTimeout(() => {
       setShowControls(false);
     }, 4000);
   };
 
-  // Attach event listeners for mouse/touch
+  // ✅ Back button handling (popstate event)
+  useEffect(() => {
+    const handlePopState = () => {
+      onClose(); // close player when browser back is clicked
+    };
+
+    window.history.pushState({ movieWatchOpen: true }, "");
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [onClose]);
+
+  // ✅ Mouse/Keyboard activity listener
   useEffect(() => {
     const events = ["mousemove", "mousedown", "touchstart", "keydown"];
-    events.forEach((event) => containerRef.current?.addEventListener(event, handleUserActivity));
+    events.forEach((event) =>
+      containerRef.current?.addEventListener(event, handleUserActivity)
+    );
 
-    // Initial hide after 4 sec
     timeoutRef.current = setTimeout(() => setShowControls(false), 3000);
 
     return () => {
-      events.forEach((event) => containerRef.current?.removeEventListener(event, handleUserActivity));
+      events.forEach((event) =>
+        containerRef.current?.removeEventListener(event, handleUserActivity)
+      );
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
 
-  // postMessage for embedded player
+  // ✅ PostMessage fullscreen support (e.g., YouTube)
   useEffect(() => {
     const handleMessage = (event) => {
       if (event.data === "playFullscreen" || event.data?.event === "requestFullscreen") {
@@ -54,10 +74,11 @@ const MovieWatch = ({ watchLink, onClose }) => {
 
   if (!watchLink) return null;
 
-  // YouTube fullscreen support
-  const finalLink = watchLink.includes("youtube.com") || watchLink.includes("youtu.be")
-    ? `${watchLink.split('?')[0]}?fs=1&autoplay=1&rel=0`
-    : watchLink;
+  // ✅ Normalize YouTube URLs for fullscreen
+  const finalLink =
+    watchLink.includes("youtube.com") || watchLink.includes("youtu.be")
+      ? `${watchLink.split("?")[0]}?fs=1&autoplay=1&rel=0`
+      : watchLink;
 
   return (
     <div
@@ -65,6 +86,7 @@ const MovieWatch = ({ watchLink, onClose }) => {
       className="fixed inset-0 bg-black z-[100] overflow-hidden cursor-none"
       onMouseMove={handleUserActivity}
       onClick={handleUserActivity}
+      onDoubleClick={handleDoubleClick} // ✅ double click toggle fullscreen
     >
       <iframe
         src={finalLink}
@@ -75,9 +97,9 @@ const MovieWatch = ({ watchLink, onClose }) => {
         title="Movie Player"
       />
 
-      {/* Controls - Hide/Show with Animation */}
+      {/* 🎛️ Floating Controls */}
       <div
-        className={` absolute inset-0 pointer-events-none transition-opacity duration-500 ${
+        className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${
           showControls ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -92,7 +114,7 @@ const MovieWatch = ({ watchLink, onClose }) => {
           ⛶ Fullscreen
         </button>
 
-        {/* Cross Button - Center & Bigger */}
+        {/* Close Button */}
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -103,7 +125,7 @@ const MovieWatch = ({ watchLink, onClose }) => {
              w-16 h-16 rounded-full flex items-center justify-center 
              shadow-2xl z-30 text-2xl"
         >
-          ✕ CloseTab
+          ✕
         </button>
       </div>
     </div>
@@ -111,6 +133,7 @@ const MovieWatch = ({ watchLink, onClose }) => {
 };
 
 export default MovieWatch;
+
 // import React from "react";
 
 // const MovieWatch = ({ watchLink, onClose }) => {
