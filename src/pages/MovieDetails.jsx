@@ -237,7 +237,8 @@ const MovieDetails = () => {
         {movie.downloadLinks && movie.downloadLinks.length > 1 && (
           <div className="w-full mt-6 mb-12">
             <h2 className="text-2xl font-bold text-yellow-400 mb-4">
-              🎬 Movie Links
+              🎬 Movie Links <br />
+              480p 720p 1080p 4k 
             </h2>
             <div className="flex flex-wrap justify-center gap-3">
               {/* 2–5 → Download Buttons */}

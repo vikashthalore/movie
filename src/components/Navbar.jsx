@@ -64,6 +64,7 @@ const Navbar = ({
       <div className="flex items-center justify-between px-4 sm:px-8">
         {/* 🎬 Logo + Back Button */}
         <div className="flex items-center gap-3">
+          
           {/* ⬅️ Back Button */}
           {location.pathname !== "/" && (
             <button
@@ -127,32 +128,38 @@ const Navbar = ({
         </div>
       </div>
 
-      {/* 📱 Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-gray-900 border-t border-gray-800 py-4 animate-fadeIn">
-          <div className="flex flex-col items-start gap-2 px-5">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => handleCategoryClick(cat)}
-                className={`w-full text-left px-3 py-2 rounded-md transition-all duration-300 ${
-                  activeCategory === cat
-                    ? "bg-yellow-500 text-black font-semibold"
-                    : "hover:text-yellow-400"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+     {/* Mobile Menu */}
+{menuOpen && (
+  <div className="md:hidden bg-gray-900 border-t border-gray-800 py-4 animate-fadeIn">
+    <div className="px-5 flex gap-4">
+      
+      {/* Left: Categories in Column (Original Style) */}
+      <div className="flex flex-col items-start gap-2 flex-1">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => handleCategoryClick(cat)}
+            className={`w-full text-left px-3 py-2 rounded-md transition-all duration-300 ${
+              activeCategory === cat
+                ? "bg-yellow-500 text-black font-semibold"
+                : "hover:text-yellow-400"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
-            {/* Genre inside mobile menu */}
-            <GenreDropdown
-              onGenreSelect={handleGenreSelect}
-              activeGenre={activeGenre}
-            />
-          </div>
-        </div>
-      )}
+      {/* Right: Genre Dropdown (Aligned to Top) */}
+      <div className="flex items-start">
+        <GenreDropdown
+          onGenreSelect={handleGenreSelect}
+          activeGenre={activeGenre}
+        />
+      </div>
+    </div>
+  </div>
+)}
     </nav>
   );
 };
