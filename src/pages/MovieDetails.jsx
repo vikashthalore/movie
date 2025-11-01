@@ -7,11 +7,14 @@ import ReactPlayer from "react-player";
 import { BASE_URL } from "../config";
 import SeoText from "../components/SeoText";
 import Footer from "../components/Footer";
+import Experiance from "../components/Experiance";
 
 const MovieDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
+  const [watchLink, setWatchLink] = useState(null);
+
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -109,8 +112,11 @@ const MovieDetails = () => {
           ⬅ Back
         </button>
       </div>
-
+      
       <div className="max-w-6xl mx-auto px-4 mt-28 flex flex-col items-center text-center animate-fadeIn">
+         <p className="text-center text-yellow-400 font-semibold text-lg m-0.5">
+    ⭐ MoviesFear – Stream, Download & Enjoy HD Movies Without Limits! ⭐
+       </p>
         {/* 🎞 Poster */}
         <img
           src={movie.mainPoster || movie.imgSample?.[0] || "/placeholder.png"}
@@ -219,7 +225,7 @@ const MovieDetails = () => {
                   key={i}
                   src={img}
                   alt={`screenshot-${i}`}
-                  className="rounded-lg w-48 h-32 object-cover shadow-md hover:scale-105 transition-all duration-300 border border-yellow-600/30"
+                  className="rounded-lg w-full md:w-[86%] h-fixed-[20%] object-cover shadow-md hover:scale-105 transition-all duration-300 border border-yellow-600/30"
                 />
               ))}
             </div>
@@ -249,15 +255,45 @@ const MovieDetails = () => {
               {/* 6th → Watch Page Redirect */}
               {movie.downloadLinks.length >= 6 && (
                 <button
-                  onClick={() => navigate(`/watch/${id}`)}
-                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-green-400/50"
-                >
-                  ▶ Watch Now
-                </button>
+  onClick={() => setWatchLink(movie.downloadLinks[5])} // 6th link (index 5)
+  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-green-400/50"
+>
+  ▶ Watch Now
+</button>
+
+
+                // <button
+                //   onClick={() => navigate(`/watch/${id}`)}
+                //   className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-green-400/50"
+                // >
+                //   ▶ Watch Now
+                // </button>
               )}
             </div>
           </div>
         )}
+
+        {watchLink && (
+  <div className="w-full h-screen flex justify-center items-center bg-black mt-10">
+    <iframe
+      src={watchLink}
+      width="100%"
+      height="100%"
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+      allowFullScreen
+      scrolling="no"
+      className="w-full h-screen rounded-xl border border-yellow-500/50 shadow-lg"
+      title="MoviesFear Watch Player"
+    ></iframe>
+  </div>
+)}
+
+
+        {/* 🎬 Related Movies */}
+        <div className="border-y-2 border-yellow-300 w-full h-auto">
+          <RelatedMovie />
+        </div>
 
         {/* 🌟 Mood Rating Section */}
         <div className="w-full mt-16 mb-20">
@@ -277,21 +313,17 @@ const MovieDetails = () => {
               </div>
             ))}
           </div>
+          <div>
+          <Experiance />
+        </div>
         </div>
 
-        {/* 🎬 Related Movies */}
-        <div className="border-y-2 w-full h-auto">
-          <RelatedMovie />
-        </div>
+        
 
-{/* 🧾 SEO Text <section className="px-4 sm:px-8 lg:px-16 py-10 bg-gradient-to-b  from-black via-gray-950 to-black text-gray-300 space-y-6"> <p className="text-base sm:text-lg leading-relaxed text-justify"> Enjoy unlimited entertainment with our{" "} <span className="text-yellow-400 font-semibold"> free movie download </span>{" "} collection featuring{" "} <span className="text-yellow-400 font-semibold"> Bollywood, Hollywood, and South Indian movies </span> . Stream or download the latest HD 720p and 1080p films directly in one click — from trending action thrillers to emotional dramas, everything is available here. Experience cinema like never before with fast servers, smooth playback, and{" "} <span className="text-yellow-400 font-semibold"> full HD free movie downloads </span>{" "} anytime, anywhere. </p> <p className="text-base sm:text-lg leading-relaxed text-justify"> Explore thousands of{" "} <span className="text-yellow-400 font-semibold"> best movies in HD quality </span>{" "} across all genres — Action, Romance, Comedy, Horror, and Sci-Fi. Download your favorite titles for free and watch offline on any device. Our library is updated daily to bring you the latest{" "} <span className="text-yellow-400 font-semibold"> Bollywood, Hollywood, and South dubbed movies </span>{" "} in HD print for a superior viewing experience. </p> <p className="text-base sm:text-lg text-center text-yellow-400 font-semibold"> Free HD Movies — Anytime, Anywhere! </p> </section> */}
         <div>
           <SeoText />
         </div>
-        {/* 📜 Footer */}
-        {/* <footer className="text-gray-500 text-sm py-6 mt-10 border-t border-yellow-700/30 w-full text-center">
-          © {new Date().getFullYear()} YourSiteName | All Rights Reserved
-        </footer> */}
+      
         <Footer />
       </div>
     </div>
