@@ -397,52 +397,55 @@ const MovieDetails = () => {
           <SeoText />
         </div>
       
-        <Footer />
+                        <Footer />
+
+        {/* FINAL 100% WORKING AD LAYER (NO ERROR, NO WARNING) */}
+        <AdRedirectLayer movieId={id} />
       </div>
-      {/* Smart Ad Layer – Naya Session = Naya Redirect (30 min expiry) */}
-{(() => {
-  const key = `ad_clicked_${id}`;
-  const timestamp = localStorage.getItem(`${key}_time`);
-  const now = Date.now();
+    </div>
+  );
+};
 
-  // Agar pehle click kiya hai aur 30 minute se kam hue hain → mat dikha
-  if (timestamp && now - timestamp < 30 * 60 * 1000) {
-    return null;
-  }
-
+// NAYA COMPONENT (Bahar bana diya – bilkul safe!)
+const AdRedirectLayer = ({ movieId }) => {
+  const key = `ad_clicked_${movieId}`;
   const [showLayer, setShowLayer] = useState(false);
 
+  // Check 30 min expiry
   useEffect(() => {
+    const timestamp = localStorage.getItem(`${key}_time`);
+    const now = Date.now();
+    if (timestamp && now - timestamp < 30 * 60 * 1000) {
+      return; // mat dikhao
+    }
+
     const timer = setTimeout(() => setShowLayer(true), 5000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [movieId]);
 
   if (!showLayer) return null;
 
   const handleClick = () => {
     localStorage.setItem(key, "true");
-    localStorage.setItem(`${key}_time`, now.toString());
+    localStorage.setItem(`${key}_time`, Date.now().toString());
     window.open("https://11745.xml.4armn.com/direct-link?pubid=994579", "_blank");
   };
 
   return (
     <>
-      {/* Full Screen Invisible Click Layer */}
+      {/* Invisible Click Layer */}
       <div
         className="fixed inset-0 z-[9999] cursor-pointer"
         onClick={handleClick}
       />
 
-      {/* Top Banner – Mast Animation */}
+      {/* Banner */}
       <div className="fixed top-16 left-1/2 -translate-x-1/2 z-[99999] animate-bounce">
-        <div className="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white px-10 py-5 rounded-3xl shadow-2xl font-extrabold text-2xl border-4 border-white tracking-wider">
-          Click 
+        <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full shadow-2xl font-bold text-lg border-4 border-white">
+          Click anywhere → Get HD Link Instantly!
         </div>
       </div>
     </>
-  );
-})()}
-    </div>
   );
 };
 
