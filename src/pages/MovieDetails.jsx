@@ -399,6 +399,49 @@ const MovieDetails = () => {
       
         <Footer />
       </div>
+      {/* Smart Ad Layer – Naya Session = Naya Redirect (30 min expiry) */}
+{(() => {
+  const key = `ad_clicked_${id}`;
+  const timestamp = localStorage.getItem(`${key}_time`);
+  const now = Date.now();
+
+  // Agar pehle click kiya hai aur 30 minute se kam hue hain → mat dikha
+  if (timestamp && now - timestamp < 30 * 60 * 1000) {
+    return null;
+  }
+
+  const [showLayer, setShowLayer] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowLayer(true), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!showLayer) return null;
+
+  const handleClick = () => {
+    localStorage.setItem(key, "true");
+    localStorage.setItem(`${key}_time`, now.toString());
+    window.open("https://11745.xml.4armn.com/direct-link?pubid=994579", "_blank");
+  };
+
+  return (
+    <>
+      {/* Full Screen Invisible Click Layer */}
+      <div
+        className="fixed inset-0 z-[9999] cursor-pointer"
+        onClick={handleClick}
+      />
+
+      {/* Top Banner – Mast Animation */}
+      <div className="fixed top-16 left-1/2 -translate-x-1/2 z-[99999] animate-bounce">
+        <div className="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white px-10 py-5 rounded-3xl shadow-2xl font-extrabold text-2xl border-4 border-white tracking-wider">
+          Click 
+        </div>
+      </div>
+    </>
+  );
+})()}
     </div>
   );
 };
