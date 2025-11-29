@@ -83,16 +83,36 @@ const Home = () => {
       {/* Main Content (pushed below fixed navbar) */}
       <div className="pt-20">
         {/* Latest 10 Movies Horizontal Scroll */}
-        <div className="overflow-x-auto flex gap-4 py-5 px-5 bg-black scrollbar-hidden">
-          {movies.slice(0, 10).map((movie) => (
-            <img
-              key={movie._id}
-              src={movie.mainPoster || movie.imgSample?.[0 || ""] || "/placeholder.png"}
-              alt={movie.title}
-              className="h-56 w-40 rounded-md object-cover hover:scale-105 transition-transform duration-300 cursor-pointer flex-shrink-0"
-            />
-          ))}
-        </div>
+        {/* Latest 10 Movies Horizontal Scroll - FINAL FIXED */}
+<div className="overflow-x-auto flex gap-5 py-6 px-5 bg-black scrollbar-hidden">
+  {movies.slice(0, 10).map((movie) => {
+    // Safe image picker
+    let poster = "/placeholder.png"; // default
+
+    if (movie.mainPoster && movie.mainPoster.trim() !== "") {
+      poster = movie.mainPoster;
+    } else if (movie.imgSample) {
+      if (Array.isArray(movie.imgSample) && movie.imgSample.length > 0) {
+        poster = movie.imgSample[0];
+      } else if (typeof movie.imgSample === "string") {
+        poster = movie.imgSample;
+      }
+    }
+
+    return (
+      <div key={movie._id} className="flex-shrink-0">
+        <img
+          src={poster}
+          alt={movie.title || "Movie"}
+          className="h-64 w-44 rounded-lg object-cover shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-800"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/400x600/111827/ffffff?text=No+Image";
+          }}
+        />
+      </div>
+    );
+  })}
+</div>
 
         {/* All Movies Title */}
         <h2 className="text-2xl font-bold px-5 py-6 flex items-center gap-2">
@@ -190,9 +210,9 @@ const Home = () => {
             </h3>
             <div className="flex justify-center gap-10 flex-wrap">
               {/* Telegram */}
-              {process.env.REACT_APP_TELEGRAM && (
+              {import.meta.env.VITE_TELEGRAM && (
                 <a
-                  href={process.env.REACT_APP_TELEGRAM}
+                  href={import.meta.env.VITE_TELEGRAM}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
@@ -207,9 +227,9 @@ const Home = () => {
               )}
 
               {/* WhatsApp */}
-              {process.env.REACT_APP_WHATSAPP && (
+              {import.meta.env.VITE_WHATSAPP && (
                 <a
-                  href={process.env.REACT_APP_WHATSAPP}
+                  href={import.meta.env.VITE_WHATSAPP}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
@@ -224,9 +244,9 @@ const Home = () => {
               )}
 
               {/* Instagram */}
-              {process.env.REACT_APP_INSTAGRAM && (
+              {import.meta.env.VITE_INSTAGRAM && (
                 <a
-                  href={process.env.REACT_APP_INSTAGRAM}
+                  href={import.meta.env.VITE_INSTAGRAM}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
@@ -241,9 +261,9 @@ const Home = () => {
               )}
 
               {/* Facebook */}
-              {process.env.REACT_APP_FACEBOOK && (
+              {import.meta.env.VITE_FACEBOOK && (
                 <a
-                  href={process.env.REACT_APP_FACEBOOK}
+                  href={import.meta.env.VITE_FACEBOOK}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
