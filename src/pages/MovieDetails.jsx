@@ -15,8 +15,33 @@ const MovieDetails = () => {
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [watchLink, setWatchLink] = useState(null);
+    const [selectedMood, setSelectedMood] = useState(null); // user ne kya vote kiya
+  const [moodCounts, setMoodCounts] = useState([12, 28, 65, 112, 189]); // initial counts (tum change kar sakte ho)
 
+  // YE DONO YAHAN PEHLE HI DAAL DO
+  const moodCards = [
+  { label: "Okay",      icon: "Neutral Face" },
+  { label: "Average",   icon: "Slightly Smiling Face" },
+  { label: "Good",      icon: "Grinning Face" },
+  { label: "Fantastic", icon: "Star-Struck" },
+  { label: "Awesome",   icon: "Smiling Face with Heart-Eyes" },
+];
 
+  const handleMoodVote = (index) => {
+    setMoodCounts(prev => {
+      const newCounts = [...prev];
+      if (selectedMood !== null && selectedMood !== index) {
+        newCounts[selectedMood] -= 1; // purana vote hatao
+      }
+      if (selectedMood === index) {
+        setSelectedMood(null); // same click → cancel
+      } else {
+        newCounts[index] += 1;
+        setSelectedMood(index);
+      }
+      return newCounts;
+    });
+  };
   useEffect(() => {
     const fetchMovie = async () => {
       try {
@@ -93,13 +118,47 @@ const MovieDetails = () => {
 )}
 
   // 😍 Mood emojis
-  const moodCards = [
-    { label: "Okay", icon: "😑" },
-    { label: "Average", icon: "😋" },
-    { label: "Good", icon: "😄" },
-    { label: "Fantastic", icon: "😅" },
-    { label: "Awesome", icon: "😍" },
-  ];
+         {/* Mood Rating Section - WITH VOTING & COUNT */}
+        <div className="w-full mt-16 mb-20">
+          <h2 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
+            How was the Movie?
+          </h2>
+
+          {/* Mood Cards with Vote Count */}
+          <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+            {moodCards.map((mood, index) => (
+              <button
+                key={index}
+                onClick={() => handleMoodVote(index)}
+                className={`relative bg-gray-900 border-2 rounded-2xl p-6 w-28 sm:w-32 transition-all duration-300 transform hover:scale-110
+                  ${selectedMood === index 
+                    ? "border-yellow-400 shadow-2xl shadow-yellow-400/30 scale-110" 
+                    : "border-gray-700 hover:border-yellow-500"}`}
+              >
+                <div className="text-5xl mb-3">{mood.icon}</div>
+                <p className="text-sm font-semibold text-gray-300">{mood.label}</p>
+
+                {/* Vote Count Badge */}
+                <div className="absolute -top-3 -right-3 bg-yellow-500 text-black text-xs font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                  {moodCounts[index]}
+                </div>
+
+                {/* Selected Indicator */}
+                {selectedMood === index && (
+                  <div className="absolute inset-0 border-4 border-yellow-400 rounded-2xl animate-pulse"></div>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Feedback Message */}
+          {selectedMood !== null && (
+            <p className="text-center text-green-400 mt-8 text-lg font-medium animate-fadeIn">
+              Thanks for your vote! You chose: <span className="text-yellow-400 font-bold">{moodCards[selectedMood].label}</span>
+            </p>
+          )}
+        </div>
+
 
   return (
     <div className="bg-black text-white min-h-screen">
@@ -282,19 +341,39 @@ const MovieDetails = () => {
           <h2 className="text-2xl font-bold text-yellow-400 mb-6">
             🌟 How was the Movie?
           </h2>
-          <div className="flex flex-wrap justify-center gap-5">
+                  {/* Mood Rating Section - AB 100% KAAM KAREGA */}
+        <div className="w-full mt-16 mb-20 px-4">
+          
+
+          <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
             {moodCards.map((mood, index) => (
-              <div
+              <button
                 key={index}
-                className="bg-gray-900 border border-yellow-600/40 rounded-xl shadow-md hover:scale-110 hover:border-yellow-400 transition-all duration-300 flex flex-col items-center justify-center p-4 w-24 sm:w-28"
+                onClick={() => handleMoodVote(index)}
+                className={`relative bg-gray-900 border-2 rounded-3xl p-8 w-32 transition-all duration-300 hover:scale-110
+                  ${selectedMood === index 
+                    ? "border-yellow-400 shadow-2xl shadow-yellow-500/40 ring-4 ring-yellow-400/30" 
+                    : "border-gray-700 hover:border-yellow-500"}`}
               >
-                <span className="text-3xl mb-1">{mood.icon}</span>
-                <p className="text-sm text-gray-300 font-medium">
-                  {mood.label}
-                </p>
-              </div>
+                <div className="text-6xl mb-4">{mood.icon}</div>
+                <p className="text-lg font-bold">{mood.label}</p>
+
+                {/* Count Badge */}
+                <div className="absolute -top-3 -right-3 bg-yellow-500 text-black font-bold text-sm rounded-full w-10 h-10 flex items-center shadow-xl border-2 border-black">
+                  {moodCounts[index]}
+                </div>
+              </button>
             ))}
           </div>
+
+          {selectedMood !== null && (
+            <p className="text-center mt-8 text-green-400 text-xl font-medium">
+              Thank you! You rated it as <span className="text-yellow-400 font-bold">{moodCards[selectedMood].label}</span>
+            </p>
+          )}
+        </div>
+
+
           <div>
           <Experiance />
         </div>
