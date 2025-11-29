@@ -274,23 +274,35 @@ const MovieDetails = () => {
 )}
 
         {/* 📸 Screenshots */}
-        {movie.imgSample?.length > 0 && (
-          <div className="w-full mx-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6">
-              📸 Screenshots
-            </h2>
-            <div className="flex flex-wrap justify-center gap-4">
-              {movie.imgSample.map((img, i) => (
-                <img
-                  key={i}
-                  src={img}
-                  alt={`screenshot-${i}`}
-                  className="rounded-lg w-full md:w-[86%] h-fixed-[20%] object-cover shadow-md hover:scale-105 transition-all duration-300 border border-yellow-600/30"
-                />
-              ))}
-            </div>
+        {/* Screenshots -  */}
+{movie.imgSample?.length > 0 && (
+  <div className="w-full max-w-6xl mx-auto px-4 my-12">
+    <h2 className="text-3xl font-bold text-yellow-400 text-center mb-8">
+      Screenshots
+    </h2>
+
+    {/* Responsive Grid */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {movie.imgSample.map((img, i) => (
+        <div
+          key={i}
+          className="group relative overflow-hidden rounded-xl shadow-xl border border-yellow-600/20 cursor-pointer transform transition-all duration-300 hover:scale-105"
+        >
+          <img
+            src={img}
+            alt={`Screenshot ${i + 1}`}
+            className="w-full h-48 sm:h-56 object-cover"
+            loading="lazy"
+          />
+          {/* Hover Effect */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+            <span className="text-yellow-400 font-bold text-sm">{i + 1}</span>
           </div>
-        )}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
         {/* ⬇️ Download (2–5) + Watch (6) */}
         {movie.downloadLinks && movie.downloadLinks.length > 1 && (
