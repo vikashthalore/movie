@@ -282,11 +282,11 @@ const MovieDetails = () => {
     </h2>
 
     {/* Responsive Grid */}
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {movie.imgSample.map((img, i) => (
         <div
           key={i}
-          className="group relative overflow-hidden rounded-xl shadow-xl border border-yellow-600/20 cursor-pointer transform transition-all duration-300 hover:scale-105"
+          className="group relative overflow-hidden rounded-xl shadow-xl border border-yellow-600/20 cursor-pointer transform transition-all duration-300 hover:scale-102"
         >
           <img
             src={img}
