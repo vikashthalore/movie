@@ -20,11 +20,11 @@ const MovieDetails = () => {
 
   // YE DONO YAHAN PEHLE HI DAAL DO
   const moodCards = [
-  { label: "Okay",      icon: "Neutral Face" },
-  { label: "Average",   icon: "Slightly Smiling Face" },
-  { label: "Good",      icon: "Grinning Face" },
-  { label: "Fantastic", icon: "Star-Struck" },
-  { label: "Awesome",   icon: "Smiling Face with Heart-Eyes" },
+  { label: "Okay",      icon: "😑" },
+  { label: "Average",   icon: "🙂" },
+  { label: "Good",      icon: "😀" },
+  { label: "Fantastic", icon: "🤩" },
+  { label: "Awesome",   icon: "😍" },
 ];
 
   const handleMoodVote = (index) => {
