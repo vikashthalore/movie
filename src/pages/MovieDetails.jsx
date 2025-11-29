@@ -16,7 +16,7 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const [watchLink, setWatchLink] = useState(null);
     const [selectedMood, setSelectedMood] = useState(null); // user ne kya vote kiya
-  const [moodCounts, setMoodCounts] = useState([12, 28, 65, 112, 189]); // initial counts (tum change kar sakte ho)
+  const [moodCounts, setMoodCounts] = useState([]); // initial counts (tum change kar sakte ho)
 
   // YE DONO YAHAN PEHLE HI DAAL DO
   const moodCards = [
