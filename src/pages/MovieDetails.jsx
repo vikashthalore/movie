@@ -310,7 +310,7 @@ const MovieDetails = () => {
           <div className="w-full mt-6 mb-12">
             <h2 className="text-2xl font-bold text-yellow-400 mb-4">
               🎬 Movie Links <br />
-              480p 720p 1080p 4k 
+              480p 720p 1080p 4k HD Download & Last link Watch
             </h2>
             <div className="flex flex-wrap justify-center gap-3">
               {/* 2–5 → Download Buttons */}
@@ -335,6 +335,17 @@ const MovieDetails = () => {
   ▶ Watch Now
 </button>
               )}
+              
+              {/*  */}
+               {movie.downloadLinks.length >= 7 && (
+                <button
+  onClick={() => setWatchLink(movie.downloadLinks[6])} // 7th link (index 6)
+  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-green-400/50"
+>
+  ▶ Watch Now
+</button>
+              )}
+              {/*  */}
             </div>
           </div>
         )}
@@ -386,13 +397,10 @@ const MovieDetails = () => {
           )}
         </div>
 
-
           <div>
           <Experiance />
         </div>
         </div>
-
-        
 
         <div>
           <SeoText />
