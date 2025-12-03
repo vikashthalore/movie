@@ -5,7 +5,7 @@ import axios from "axios";
 import { BASE_URL } from "../config";
 import SeoText from "../components/SeoText";
 import Footer from "../components/Footer";
-import logo from "../../public/fmg.jpg"
+import logo from "../../public/fmg.png"
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -122,9 +122,15 @@ const Home = () => {
         {/* All Movies Title */}
         <h2 className="px-5 py-6 flex items-center gap-3">
   <span className="text-2xl font-bold text-[#9CDCFE]">All Movies</span>
-  <span className="text-[#D7BA7D] font-bold text-3xl animate-bounce-slow">
-    MoviesFear <img src={logo} height={24} width={24} alt="" />
-  </span>
+  
+  <div className="flex items-center gap-2">
+    <span className="text-3xl font-bold text-[#D7BA7D]">MoviesFear</span>
+    <img 
+      src={logo} 
+      alt="Logo" 
+      className="w-9 h-9 animate-bounce-slow" 
+    />
+  </div>
 </h2>
 
         {/* Movie Grid */}

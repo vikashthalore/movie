@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Menu, X, ArrowLeft } from "lucide-react";
 import GenreDropdown from "./GenreDropdown";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import logo from "../../public/fmg.png"
 const Navbar = ({
   onSearch = () => {},
   onCategorySelect = () => {},
@@ -81,7 +81,11 @@ const Navbar = ({
             className="flex items-center gap-1 text-yellow-400 text-xl font-bold cursor-pointer hover:scale-105 transition-all"
             onClick={() => handleCategoryClick("Home")}
           >
-            🎬
+            <img 
+                  src={logo} 
+                  alt="Logo" 
+                  className="w-9 h-9 animate-bounce-slow" 
+                />
           </div>
         </div>
 
