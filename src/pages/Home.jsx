@@ -82,7 +82,7 @@ const Home = () => {
       </div>
 
       {/* Main Content (pushed below fixed navbar) */}
-      <div className="pt-0">
+      <div className="pt-14">
         {/* Latest 10 Movies Horizontal Scroll */}
         {/* Latest 10 Movies Horizontal Scroll - 100% WORKING & FIXED */}
 <div className="overflow-x-auto flex gap-5 py-6 px-5 bg-black scrollbar-hidden">
