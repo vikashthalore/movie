@@ -5,7 +5,7 @@ import axios from "axios";
 import { BASE_URL } from "../config";
 import SeoText from "../components/SeoText";
 import Footer from "../components/Footer";
-import logo from "../assets/fmg.jpg"
+import logo from "../../public/fmg.jpg"
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
